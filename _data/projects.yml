@@ -3,7 +3,7 @@
   date: "2012-"
   desc: "An iPad app for creating tessellations and mandalas"
 - name: 3D Minesweeper
-  link: https://hristost.github.io/3d-minesweeper/
+  link: https://github.com/hristost/3d-minesweeper
   date: "2017"
   desc: "A 3D version of Minesweeper I wrote for my Computer Graphics class"
 - name: Calligraphy
