@@ -1,0 +1,20 @@
+---
+layout: card
+title: Home
+---
+Hi, my name is Hristo and I am currently  sophomore at Yale studying Computer 
+Science. Some things I've made:
+
+  <ul class="projects">
+    {% for item in site.data.projects %}
+    <li>
+      <h3><a href="{{ item.link }}" >
+        {{ item.name }}
+      </a>
+      </h3>
+      <p>
+        {{ item.desc }}
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
