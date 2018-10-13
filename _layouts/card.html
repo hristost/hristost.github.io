@@ -2,26 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-
-    <title>H.S. -- {{ page.title }}</title>
+    <title>{{ page.title }}</title>
     <meta name="author" content="Hristo Staykov">
-
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-
-
-
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
+
     <div class="container">
       <div class="card">
         <div class="card-container">
           <header>
-            <img src="puff.jpg" alt="me"/>
-            <!-- <h1>h.s.</h1> -->
-
+            <img src="puff.jpg" alt="this is me"/>
             <ul class="social">
               <li>
                 <a href="https://github.com/hristost" alt="Github">
@@ -38,12 +32,8 @@
                   <i class="far fa-envelope"></i>
                 </a>
               </li>
-
             </ul>
-                {% include navigation.html %}
-
-
-
+            {% include navigation.html %}
           </header>
           <div class="content">
             {{content}}
