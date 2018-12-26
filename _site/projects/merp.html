@@ -40,13 +40,13 @@ I cut the plate on my university laser cutter and used spare 3mm milk-white acry
 <img src="/assets/img/merp/side.JPG" style="max-width: 50%" /><img src="/assets/img/merp/back.jpeg" style="max-width:50%" />
 </figure>
 
-<p>The back of the keyboard has sillicone legs and two stickers, one of which says “Si fractum non sit, noli id reficere” – Latin for <a href="https://en.wikiquote.org/wiki/Henry_Beard">“If it ain’t broke, don’t fix it”</a>.</p>
+<p>The back of the keyboard has silicone legs and two stickers, one of which reads “Si fractum non sit, noli id reficere” – Latin for <a href="https://en.wikiquote.org/wiki/Henry_Beard">“If it ain’t broke, don’t fix it”</a>.</p>
 <figure class="full">
 <img src="/assets/img/merp/sticker.jpeg" width="70%" />
 </figure>
 
 <h2 id="backlight">Backlight</h2>
-<p>I had leftover LED drivers from a previous project, so I decided to add LED backlight for entertainment purposes. Many switches have been rotated to accomodate for components on the PCB, so there was no way to have light uniform enough for backlit keycaps. However, since the acrylic plate and switches are somewhat transparent, this makes for some cool light effects:</p>
+<p>I had leftover LED drivers from a previous project, so I decided to add LED backlight for entertainment purposes. Many switches have been rotated to accommodate for components on the PCB, so there was no way to have light uniform enough for backlit keycaps. However, since the acrylic plate and switches are somewhat transparent, this makes for some cool light effects:</p>
 <figure class="full">
 <img src="/assets/img/merp/video.gif" style="max-width:100%;" />
 </figure>
@@ -133,12 +133,12 @@ Some keys have dual functions – for example, <code class="highlighter-rouge">E
 </code></pre>
 
 <h2 id="backlight-1">Backlight</h2>
-<p>I had to write code to communicate with the <code class="highlighter-rouge">TLC59711</code> LED drivers. Communication is rather simple, as it only needs a Clock and Data line. I tied the clock of the driver to <code class="highlighter-rouge">SCK</code>, and the data line to <code class="highlighter-rouge">MOSI</code>. However, the <code class="highlighter-rouge">TLC59711</code> lacks a Slave Select (<code class="highlighter-rouge">SS</code>) pin. To accomodate for that, I added an <code class="highlighter-rouge">AND</code> gate that adds <code class="highlighter-rouge">SCK</code> and <code class="highlighter-rouge">SS</code>, and outputs to the data input for the driver. This way, the driver receives data all the time, but processes it only when <code class="highlighter-rouge">SS</code> is high.</p>
+<p>I had to write code to communicate with the <code class="highlighter-rouge">TLC59711</code> LED drivers. Communication is rather simple, as it only needs a Clock and Data line. I tied the clock of the driver to <code class="highlighter-rouge">SCK</code>, and the data line to <code class="highlighter-rouge">MOSI</code>. However, the <code class="highlighter-rouge">TLC59711</code> lacks a Slave Select (<code class="highlighter-rouge">SS</code>) pin. To accommodate for that, I added an <code class="highlighter-rouge">AND</code> gate that adds <code class="highlighter-rouge">SCK</code> and <code class="highlighter-rouge">SS</code>, and outputs to the data input for the driver. This way, the driver receives data all the time, but processes it only when <code class="highlighter-rouge">SS</code> is high.</p>
 <figure class="full">
 <img src="/assets/img/merp/sch_and.png" style="max-width: 100%" />
 </figure>
 
-<p>The LED driver is impelemnted in <code class="highlighter-rouge">drivers/avr/tlc59711.{h, c}</code>. I modified <code class="highlighter-rouge">split_util.c</code> from Viterbi’s firmware to continiously call functions that update the LED state. Currently, the backlight is hardcoded to be rather simple: pressing any key sets its LED to on, releasing any key creates a ripple effect. If I have time, I might refactor my code and make a pull request to merge <code class="highlighter-rouge">TLC59711</code> support into QMK.</p>
+<p>The LED driver is implemented in <code class="highlighter-rouge">drivers/avr/tlc59711.{h, c}</code>. I modified <code class="highlighter-rouge">split_util.c</code> from Viterbi’s firmware to continuously call functions that update the LED state. Currently, the backlight is hardcoded to be rather simple: pressing any key sets its LED to on, releasing any key creates a ripple effect. If I have time, I might refactor my code and make a pull request to merge <code class="highlighter-rouge">TLC59711</code> support into QMK.</p>
 
       </div>
     </div>

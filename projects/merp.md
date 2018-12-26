@@ -28,13 +28,13 @@ The keyboard sits at a 7º angle. The two halves are connected using a TTRS cabl
 <img src="/assets/img/merp/side.JPG" style="max-width: 50%"><img src="/assets/img/merp/back.jpeg" style="max-width:50%">
 </figure>
 
-The back of the keyboard has sillicone legs and two stickers, one of which says "Si fractum non sit, noli id reficere" -- Latin for ["If it ain't broke, don't fix it"](https://en.wikiquote.org/wiki/Henry_Beard).
+The back of the keyboard has silicone legs and two stickers, one of which reads "Si fractum non sit, noli id reficere" -- Latin for ["If it ain't broke, don't fix it"](https://en.wikiquote.org/wiki/Henry_Beard).
 <figure class="full">
 <img src="/assets/img/merp/sticker.jpeg" width="70%">
 </figure>
 
 ## Backlight
-I had leftover LED drivers from a previous project, so I decided to add LED backlight for entertainment purposes. Many switches have been rotated to accomodate for components on the PCB, so there was no way to have light uniform enough for backlit keycaps. However, since the acrylic plate and switches are somewhat transparent, this makes for some cool light effects:
+I had leftover LED drivers from a previous project, so I decided to add LED backlight for entertainment purposes. Many switches have been rotated to accommodate for components on the PCB, so there was no way to have light uniform enough for backlit keycaps. However, since the acrylic plate and switches are somewhat transparent, this makes for some cool light effects:
 <figure class="full">
 <img src="/assets/img/merp/video.gif" style="max-width:100%;">
 </figure>
@@ -127,9 +127,9 @@ and then assigning the correct pins:
 ```
 
 ## Backlight
-I had to write code to communicate with the `TLC59711` LED drivers. Communication is rather simple, as it only needs a Clock and Data line. I tied the clock of the driver to `SCK`, and the data line to `MOSI`. However, the `TLC59711` lacks a Slave Select (`SS`) pin. To accomodate for that, I added an `AND` gate that adds `SCK` and `SS`, and outputs to the data input for the driver. This way, the driver receives data all the time, but processes it only when `SS` is high.
+I had to write code to communicate with the `TLC59711` LED drivers. Communication is rather simple, as it only needs a Clock and Data line. I tied the clock of the driver to `SCK`, and the data line to `MOSI`. However, the `TLC59711` lacks a Slave Select (`SS`) pin. To accommodate for that, I added an `AND` gate that adds `SCK` and `SS`, and outputs to the data input for the driver. This way, the driver receives data all the time, but processes it only when `SS` is high.
 <figure class="full">
 <img src="/assets/img/merp/sch_and.png" style="max-width: 100%">
 </figure>
 
-The LED driver is impelemnted in `drivers/avr/tlc59711.{h, c}`. I modified `split_util.c` from Viterbi's firmware to continiously call functions that update the LED state. Currently, the backlight is hardcoded to be rather simple: pressing any key sets its LED to on, releasing any key creates a ripple effect. If I have time, I might refactor my code and make a pull request to merge `TLC59711` support into QMK.
+The LED driver is implemented in `drivers/avr/tlc59711.{h, c}`. I modified `split_util.c` from Viterbi's firmware to continuously call functions that update the LED state. Currently, the backlight is hardcoded to be rather simple: pressing any key sets its LED to on, releasing any key creates a ripple effect. If I have time, I might refactor my code and make a pull request to merge `TLC59711` support into QMK.
