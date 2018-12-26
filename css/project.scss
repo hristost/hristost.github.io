@@ -1,0 +1,76 @@
+---
+---
+
+@import "base";
+ul {
+
+       list-style-type: disc; 
+   list-style-position: inside; 
+
+}
+
+p {
+  margin-top:10px;
+
+}
+header {
+  padding: 0;
+  margin: 0;
+
+  img {
+    width: 100%;
+    border: 1px solid rgba(68, 119, 153, 0.4);
+  }
+  h1 {
+    font-size: 150%;
+
+  }
+
+}
+pre code {
+  display: block;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+@media screen and (max-width: 700px) {
+  body {
+    padding: 10px;
+  }
+figure.full {
+  margin: 15px 0px 5px;
+  text-align: center;
+}
+}
+@media screen and (min-width: 700px) {
+
+  body {
+    // background-image: url("bg.png");
+    background-color: #f0f0f0;
+  }
+  .container {
+
+  }
+
+figure.full {
+  margin: 15px -8px 5px;
+  text-align: center;
+}
+  header {
+    display: block;
+    border-bottom: 1px solid #eee;
+    margin: -16px -16px 16px -16px;
+    padding:16px;
+
+  }
+
+  .content{
+    flex: 1;
+    max-width: 700px;
+    min-width: 700px;
+      margin: auto;
+    background-color: #f7f7f7;
+    padding: 16px;
+    border: 1px solid #ddd;
+  }
+}
+

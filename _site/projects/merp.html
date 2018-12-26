@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>merp keyboard</title>
+    <meta name="author" content="Hristo Staykov">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/project.css">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="content">
+          <header>
+            <a href="/">Back to homepage</a>
+          <h1> merp keyboard </h1>
+          </header>
+            <p><code class="highlighter-rouge">merp</code> is a split ortholinear wireless mechanical keyboard I built in 2018. It has 60 keys arranged in a 12x5 grid and can communicate over either Bluetooth LE or USB.
+Source files for the <a href="https://github.com/hristost/merp-pcb">PCB</a>, <a href="https://github.com/hristost/merp-case">Case and acrylic plate</a>, and
+<a href="https://github.com/hristost/qmk_firmware/tree/hristost_merp/keyboards/merp">QMK fork</a> can be all found on my Github.</p>
+
+<figure class="full">
+<img src="/assets/img/merp/top_half.jpeg" width="100%" />
+</figure>
+
+<h1 id="design">Design</h1>
+
+<p>All switches are mounted on a laser-cut 3mm acrylic plate and then soldered onto the the PCBs. This assembly is then screwed onto a 3D printed case.
+The case is 3D printed by shapeways in “Green Processed Versatile Plastic”.
+I cut the plate on my university laser cutter and used spare 3mm milk-white acrylic someone had left behind. Cherry MX switches are designed to snap-fit onto 1.5mm metal, but I feared an acrylic plate this thin would crack easily.</p>
+<figure class="full">
+<img src="/assets/img/merp/case_screw.jpeg" style="max-width: 50%" /><img src="/assets/img/merp/switch.jpeg" style="max-width:50%" />
+</figure>
+
+<p>The keyboard sits at a 7º angle. The two halves are connected using a TTRS cable. The left half has a power switch and USB-C port for charging and flashing firmware. (It is also possible to use the keyboard as a normal wired keyboard). This build uses Hako True switches and /dev/tty keycaps.</p>
+<figure class="full">
+<img src="/assets/img/merp/side.JPG" style="max-width: 50%" /><img src="/assets/img/merp/back.jpeg" style="max-width:50%" />
+</figure>
+
+<p>The back of the keyboard has sillicone legs and two stickers, one of which says “Si fractum non sit, noli id reficere” – Latin for <a href="https://en.wikiquote.org/wiki/Henry_Beard">“If it ain’t broke, don’t fix it”</a>.</p>
+<figure class="full">
+<img src="/assets/img/merp/sticker.jpeg" width="70%" />
+</figure>
+
+<h2 id="backlight">Backlight</h2>
+<p>I had leftover LED drivers from a previous project, so I decided to add LED backlight for entertainment purposes. Many switches have been rotated to accomodate for components on the PCB, so there was no way to have light uniform enough for backlit keycaps. However, since the acrylic plate and switches are somewhat transparent, this makes for some cool light effects:</p>
+<figure class="full">
+<img src="/assets/img/merp/video.gif" style="max-width:100%;" />
+</figure>
+<h1 id="electronics">Electronics</h1>
+<h2 id="pcb">PCB</h2>
+<figure class="full">
+<img src="/assets/img/merp/sch.png" width="50%" /><img src="/assets/img/merp/pcb_no_components.jpg" width="50%" />
+</figure>
+<p>The PCB is based on Adafruit’s <a href="https://github.com/adafruit/Adafruit-Feather-32u4-Bluefruit-LE-PCB">Feather</a> development board and uses <code class="highlighter-rouge">ATMega32u4</code> as its MCU. The keyswitches are wired in a matrix connected directly to the MCU pins. Underneath each switch there is a backlight LED addressable using <code class="highlighter-rouge">TLC59711</code> drivers.</p>
+
+<p>The two halves have identical PCBs and differ only by the components soldered. The slave half is missing the USB and battery charger circuitry.</p>
+
+<h2 id="battery">Battery</h2>
+<p>The Adafruit Feather PCB has circuitry for charging a Li-ion battery via USB. I copied that and then reused the battery from a broken <del>Nokia</del> Microsoft phone. There is a power switch on the left half that turns the keyboard on and off. The battery charges whenever the keyboard is plugged in.</p>
+<figure class="full">
+<img src="/assets/img/merp/pcb.jpeg" style="max-width: 50%" /><img src="/assets/img/merp/battery.jpeg" style="max-width:50%" />
+</figure>
+
+<h2 id="ble-hardware">BLE Hardware</h2>
+<p>The keyboard uses the Raytac <code class="highlighter-rouge">mdbt40-256rv3</code> module for bluetooth communication. This module is based on <code class="highlighter-rouge">nRF51822</code> and is
+the same module used in Adafruit’s <a href="https://www.adafruit.com/product/2633">Bluefruit LE SPI Friend</a>, which QMK already supports.</p>
+
+<p>The BLE module needs to be flashed with Adafruit’s <code class="highlighter-rouge">BLESPIFRIEND</code> firmware in order to work. Adafruit does not provide source code for their firmware due to licensing reasons, but binary files and instructions for flashing using STLink/V2 or J-Link are <a href="https://github.com/adafruit/Adafruit_nRF51822_Flasher">available online</a>.</p>
+
+<p>If you are building a keyboard based on this module, make sure you get the right one. There are versions with <code class="highlighter-rouge">16kB</code> and <code class="highlighter-rouge">32kB</code> of RAM whose part numbers differ by just one letter. Adafruit’s firmware needs <code class="highlighter-rouge">32kB</code>, that is, the <code class="highlighter-rouge">mdbt40-256rv3</code> module. I had accidentally bought the <code class="highlighter-rouge">16kB</code> version, and instead of ordering a new one I ultimately desoldered a module from Adafruit’s BLE SPI Friend.</p>
+
+<h2 id="assembly-procedure">Assembly procedure</h2>
+<p><em>Small note on assembly:</em> the BLE module and the ATMega use the SPI bus to communicate, which means it’s not possible to use ISP to flash firmware after the BLE module has been soldered on and programmed, as it will be using the SPI lines even if it’s being reset. Thus, the MCU should be programmed first, followed by the BLE module.</p>
+
+<h1 id="software">Software</h1>
+<p>The firmware is based on the open-source <a href="qmk.fm">QMK</a> project. I reused code from the Viterbi keyboard to get started with i2c communication between the two keyboard halves. The <code class="highlighter-rouge">hristost_merp</code> branch of my <a href="https://github.com/hristost/qmk_firmware/tree/hristost_merp/keyboards/merp">QMK fork</a> contains configuration for this keyboard (<code class="highlighter-rouge">./keyboards/merp</code>), as well as a driver for <code class="highlighter-rouge">TLC59711</code>.</p>
+
+<h2 id="keymap">Keymap</h2>
+<p>I currently use a Dvorak layout.
+Some keys have dual functions – for example, <code class="highlighter-rouge">Esc</code> acts as <code class="highlighter-rouge">Escape</code> when tapped, and as <code class="highlighter-rouge">Control</code> when used in combination with another key.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ,-----------------------------------------.  ,-----------------------------------------.
+ |   `  |   1  |   2  |   3  |   4  |   5  |  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ | Tab  |   "  |   ,  |   .  |   P  |   Y  |  |   F  |   G  |   C  |   R  |   L  |  /   |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ | Esc  |   A  |   O  |   E  |   U  |   I  |  |   D  |   H  |   T  |   N  |   S  | Enter|
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ | Shift|   ;  |   Q  |   J  |   K  |   X  |  |   B  |   M  |   W  |   V  |   Z  | Shift|
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      | Ctrl | Alt  | Cmd  | Esc  | Tab  |  | Enter| Space|      |      |      |Raise |
+ `-----------------------------------------'  `-----------------------------------------'
+                               Ctrl   Lower     Raise  Shift                             
+</code></pre></div></div>
+<p>Holding down <code class="highlighter-rouge">Raise</code> and <code class="highlighter-rouge">Lower</code> keys gives access to more keys. For example, <code class="highlighter-rouge">H</code>, <code class="highlighter-rouge">T</code>, <code class="highlighter-rouge">N</code> or <code class="highlighter-rouge">S</code> act as arrow keys if <code class="highlighter-rouge">Raise</code> is pressed.</p>
+<h2 id="low-layer">Low layer</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ,-----------------------------------------.  ,-----------------------------------------.
+ |      |      |      |      |      |      |  |      |      |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |   &amp;  |   \  |   (  |   )  |      |  |      |      |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |   _  |   =  |   [  |   ]  |      |  |      |      |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |   -  |   +  |   {  |   }  |      |  |      |      |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |RESET |      |      |      |      | Lower|  |      |      |      |      |      |      |
+ `-----------------------------------------'  `-----------------------------------------'
+</code></pre></div></div>
+<h2 id="high-layer">High layer</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ,-----------------------------------------.  ,-----------------------------------------.
+ |      |      |      |      |      |      |  |      |      |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |      |      |      |      |      |  |      |      |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |      |      |      |      |      |  |      | Left | Down |  Up  | Right|      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |      |      |      |      |      |  |      |  \   |      |      |      |      |
+ |------+------+------+------+------+------|  |------+------+------+------+------+------|
+ |      |      |      |      |      |      |  | Raise|      |      |      |      |Raise |
+ `-----------------------------------------'  `-----------------------------------------'
+</code></pre></div></div>
+
+<h2 id="bluetooth">Bluetooth</h2>
+<p>QMK already supports the <a href="https://www.adafruit.com/product/2633">Bluefruit LE SPI Friend</a> module out of the box. Adding Bluetooth support was ultimately a matter of editing the <code class="highlighter-rouge">rules.mk</code> file to include</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BLUETOOTH = AdafruitBLE
+</code></pre></div></div>
+<p>and then assigning the correct pins:</p>
+<pre><code class="language-C">#define AdafruitBleResetPin B5
+#define AdafruitBleIRQPin   B6
+</code></pre>
+
+<h2 id="backlight-1">Backlight</h2>
+<p>I had to write code to communicate with the <code class="highlighter-rouge">TLC59711</code> LED drivers. Communication is rather simple, as it only needs a Clock and Data line. I tied the clock of the driver to <code class="highlighter-rouge">SCK</code>, and the data line to <code class="highlighter-rouge">MOSI</code>. However, the <code class="highlighter-rouge">TLC59711</code> lacks a Slave Select (<code class="highlighter-rouge">SS</code>) pin. To accomodate for that, I added an <code class="highlighter-rouge">AND</code> gate that adds <code class="highlighter-rouge">SCK</code> and <code class="highlighter-rouge">SS</code>, and outputs to the data input for the driver. This way, the driver receives data all the time, but processes it only when <code class="highlighter-rouge">SS</code> is high.</p>
+<figure class="full">
+<img src="/assets/img/merp/sch_and.png" style="max-width: 100%" />
+</figure>
+
+<p>The LED driver is impelemnted in <code class="highlighter-rouge">drivers/avr/tlc59711.{h, c}</code>. I modified <code class="highlighter-rouge">split_util.c</code> from Viterbi’s firmware to continiously call functions that update the LED state. Currently, the backlight is hardcoded to be rather simple: pressing any key sets its LED to on, releasing any key creates a ripple effect. If I have time, I might refactor my code and make a pull request to merge <code class="highlighter-rouge">TLC59711</code> support into QMK.</p>
+
+      </div>
+    </div>
+  </body>
+</html>
