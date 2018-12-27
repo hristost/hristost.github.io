@@ -47,6 +47,13 @@ header {
   header h1 {
     font-size: 150%; }
 
+a.updatedDate {
+  color: #666;
+  font-style: italic;
+  text-decoration: none; }
+  a.updatedDate:hover {
+    text-decoration: underline; }
+
 pre code {
   display: block;
   max-width: 100%;

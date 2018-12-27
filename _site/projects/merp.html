@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>merp keyboard</title>
+    <title>merp</title>
     <meta name="author" content="Hristo Staykov">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/reset.css">
@@ -16,7 +16,14 @@
       <div class="content">
           <header>
             <a href="/">Back to homepage</a>
-          <h1> merp keyboard </h1>
+          <h1> merp </h1>
+          
+           
+
+          December 27 2018
+          
+
+
           </header>
             <p><code class="highlighter-rouge">merp</code> is a split ortholinear wireless mechanical keyboard I built in 2018. It has 60 keys arranged in a 12x5 grid and can communicate over either Bluetooth LE or USB.
 Source files for the <a href="https://github.com/hristost/merp-pcb">PCB</a>, <a href="https://github.com/hristost/merp-case">Case and acrylic plate</a>, and
@@ -140,6 +147,8 @@ Some keys have dual functions – for example, <code class="highlighter-rouge">E
 
 <p>The LED driver is implemented in <code class="highlighter-rouge">drivers/avr/tlc59711.{h, c}</code>. I modified <code class="highlighter-rouge">split_util.c</code> from Viterbi’s firmware to continuously call functions that update the LED state. Currently, the backlight is hardcoded to be rather simple: pressing any key sets its LED to on, releasing any key creates a ripple effect. If I have time, I might refactor my code and make a pull request to merge <code class="highlighter-rouge">TLC59711</code> support into QMK.</p>
 
+            <footer>
+            </footer>
       </div>
     </div>
   </body>

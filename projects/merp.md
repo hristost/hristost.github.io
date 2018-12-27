@@ -3,7 +3,9 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: project
-title: merp keyboard
+title: merp
+date: 2018-12-27 08:31:13 UTC
+updated: 2018-12-27 09:07:42 UTC
 ---
 `merp` is a split ortholinear wireless mechanical keyboard I built in 2018. It has 60 keys arranged in a 12x5 grid and can communicate over either Bluetooth LE or USB.
 Source files for the [PCB](https://github.com/hristost/merp-pcb), [Case and acrylic plate](https://github.com/hristost/merp-case), and

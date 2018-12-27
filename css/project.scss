@@ -27,6 +27,14 @@ header {
   }
 
 }
+a.updatedDate {
+  color: #666;
+  font-style: italic;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
 pre code {
   display: block;
   max-width: 100%;

@@ -17,8 +17,19 @@
           <header>
             <a href="/">Back to homepage</a>
           <h1> {{page.title}} </h1>
+          {% capture publishedDate %}{{ page.date | date: '%B %d %Y'}}{% endcapture %}
+          {% capture updatedDate %}{{ page.updated | date: '%B %d %Y'}}{% endcapture %} 
+
+          {{ publishedDate }}
+          {% if publishedDate != updatedDate %}
+          <a class="updatedDate" href="https://github.com/hristost/hristost.github.io/commits/master/{{page.path}}">(Updated {{ updatedDate }})</a>
+          {% endif %}
+
+
           </header>
             {{content}}
+            <footer>
+            </footer>
       </div>
     </div>
   </body>
