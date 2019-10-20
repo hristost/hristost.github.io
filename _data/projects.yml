@@ -1,11 +1,11 @@
 - name: Amaziograph
   link: https://amaziograph.com
-  date: "2012-"
+  date: "2012-2021"
   desc: "An iPad app for creating tessellations and mandalas"
 
 - name: Calligraphy
-  link: https://www.instagram.com/puffeligraphish/
-  desc: "I occasionally write things with dip pens in my free time &mdash; see them on my <a href=\"https://www.instagram.com/puffeligraphish/\">instagram</a>."
+  link: https://www.instagram.com/puffelligraphish/
+  desc: "I occasionally write things with dip pens in my free time &mdash; see them on my <a href=\"https://www.instagram.com/puffelligraphish/\">instagram</a>."
 
 - name: merp Mechanical Keyboard
   link: ./projects/merp
